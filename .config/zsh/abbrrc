@@ -1,0 +1,58 @@
+#!/bin/zsh
+
+# Global
+global=( \
+	A="| awk" \
+	G="| grep" \
+	L="| less" \
+	S="| sed" \
+	W="| wc"
+)
+
+# Regular
+regular=( \
+# Commonly used programs
+	c="clear" \
+	e="$EDITOR" \
+	v="$EDITOR" \
+	f="$FILE" \
+	z="$READER" \
+# ls
+	l="ls -l" \
+	la="ls -la" \
+	lt="ls -lT" \
+	lta="ls -lTa" \
+# Movement
+	...="cd ../.." \
+	....="cd ../../.." \
+	.....="cd ../../../.." \
+	cf="cd $XDG_CONFIG_HOME" \
+	d="cd $XDG_DATA_HOME" \
+	s="cd $SCRIPTS" \
+	r="cd ~/repositories" \
+# Git
+	g="git" \
+	gs="git status" \
+	gd="git diff --color" \
+	ga="git add -A" \
+	gc="git commit" \
+	gco="git checkout" \
+	gb="git branch" \
+	gsb="git show-branch" \
+	gg="git grep" \
+	gl="git log --graph --pretty=format:'%C(yellow)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) %C(dim cyan)<%an>%Creset' --abbrev-commit" \
+	glg="git log --graph"
+	gk="gitk --all" \
+	gf="git fetch" \
+	gpl="git pull" \
+	gps="git push" \
+	gr="git rebase" \
+	gri="git rebase --interactive" \
+	gcp="git cherry-pick" \
+	grs="git reset" \
+	grv="git revert" \
+	grm="git rm"
+)
+
+for cmd ($global) abbr -g $cmd
+for cmd ($regular) abbr $cmd

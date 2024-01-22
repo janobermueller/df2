@@ -1,0 +1,110 @@
+#!/bin/zsh
+
+typeset -aHg PROMPT_SEGMENTS=(
+	status_segment
+	context_segment
+	dir_segment
+	git_segment
+	end_segment
+)
+
+CURRENT_BG="NONE"
+SEGMENT_SEPARATOR="\ue0b0"
+STATUS_SYMBOL="\ue847"
+
+prompt_segment() {
+  local bg fg
+  [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
+  [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
+  if [[ $CURRENT_BG != "NONE" && $1 != $CURRENT_BG ]]; then
+    print -n "%{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%}"
+  else
+    print -n "%{$bg%}%{$fg%}"
+  fi
+  CURRENT_BG=$1
+  [[ -n $3 ]] && print -n $3
+}
+
+end_segment() {
+  if [[ -n $CURRENT_BG ]]; then
+    print -n "%{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+  else
+    print -n "%{%k%}"
+  fi
+  print -n "%{%f%}"
+  CURRENT_BG=""
+}
+
+status_segment() {
+	local bg=10
+
+	[[ $RETVAL -ne 0 ]] && bg=9
+	prompt_segment $bg 0 " $STATUS_SYMBOL "
+}
+
+context_segment() {
+	local user=`whoami`
+
+	if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CONNECTION" ]]; then
+		prompt_segment 8 7 " %(!.%{%F{3}%}.)$user@%m%f "
+	fi
+}
+
+dir_segment() {
+	prompt_segment 237 15 " %1~ "
+}
+
+git_segment() {
+	is_dirty() {
+		test -n "$(git status --porcelain --ignore-submodules)"
+	}
+	has_unstaged_files() {
+		test -n "$(git status --porcelain --ignore-submodules | grep '^\s')"
+	}
+	has_untracked_files() {
+		test -n "$(git ls-files --exclude-standard --others)"
+	}
+	local bg=240 fg=15 ref="$vcs_info_msg_0_"
+
+	if [[ -n "$ref" ]]; then
+		if is_dirty; then
+			bg=10
+			fg=0
+			has_unstaged_files && bg=11;
+			has_untracked_files && bg=9;
+		fi
+		prompt_segment $bg $fg " $ref "
+	fi
+}
+
+prompt_main() {
+	CURRENT_BG="NONE"
+	for prompt_segment in "${PROMPT_SEGMENTS[@]}"; do
+		[[ -n $prompt_segment ]] && $prompt_segment
+	done
+}
+
+prompt_precmd() {
+	vcs_info
+	PROMPT="$(prompt_main) "
+}
+
+precmd() {
+	RETVAL=$?
+}
+
+prompt_setup() {
+	autoload -Uz vcs_info
+	autoload -Uz add-zsh-hook
+
+	prompt_opts=(cr subst percent)
+
+	add-zsh-hook precmd prompt_precmd
+
+	zstyle ":vcs_info:*" enable git
+	zstyle ':vcs_info:*' check-for-changes false
+	zstyle ":vcs_info:git*" formats "%b"
+	zstyle ":vcs_info:git*" actionformats "%b (%a)"
+}
+
+prompt_setup "$@"

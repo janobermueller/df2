@@ -1,0 +1,12 @@
+# for more details see the sfeedrc(5) and sfeed_update(1) man pages
+# and the README file.
+
+sfeedpath="$XDG_DATA_HOME/sfeed/feeds"
+
+# list of feeds to fetch:
+feeds() {
+	# feed <name> <feedurl> [basesiteurl] [encoding]
+	feed "Arch Linux News" "https://archlinux.org/feeds/news/"
+	feed "Go Blog" "https://go.dev/blog/feed.atom"
+	feed "Go GitHub Tags" "https://github.com/golang/go/tags.atom"
+}

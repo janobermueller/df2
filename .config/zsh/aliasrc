@@ -1,0 +1,29 @@
+#!/bin/zsh
+
+# Replace vim with neovim
+alias \
+	vi="nvim" \
+	vim="nvim" \
+	vimdiff="nvim -d"
+
+# Replace ls with exa
+alias ls="eza --group-directories-first --git"	
+
+# Replace cat with bat
+alias cat="bat --italic-text=always --tabs 2 --theme=Nord"
+
+# Verbosity(-v), prompt(-i/-I), creating non-existent parent (-p)
+alias \
+	cp="cp -iv" \
+	mv="mv -iv" \
+	rm="rm -Iv" \
+	mkd="mkdir -pv"
+
+# Colorize commands
+alias \
+	diff="diff --color=auto" \
+	grep="grep --color=auto" \
+	ip="ip -color=auto"
+
+# Dotfile management
+alias dfm="git --git-dir=$HOME/repositories/dotfiles/ --work-tree=$HOME/"

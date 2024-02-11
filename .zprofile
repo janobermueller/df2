@@ -15,7 +15,7 @@ export VISUAL="nvim"
 export EDITOR="$VISUAL"
 export FILE="nnn"
 export READER="zathura"
-export TERMINAL="foot"
+export TERMINAL="st"
 
 # Set default directories
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -85,7 +85,7 @@ export NNN_FIFO='/tmp/nnn.fifo'			# Required for preview-tui/preview-tabbed
 
 startw() {
 	ssh-agent dwl -s "
-		swaybg -i ~/.config/wallpaper.png &
+		swaybg -i ~/.config/wallpaper.jpg &
 		somebar
 	"
 }

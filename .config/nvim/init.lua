@@ -15,7 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{ "lifepillar/vim-gruvbox8" },
-	{ "nvim-lualine/lualine.nvim", dependecies = "nvim-tree/nvim-web-devicons" },
+	{ "nvim-lualine/lualine.nvim", dependencies = "nvim-tree/nvim-web-devicons" },
 	{ "nvim-telescope/telescope.nvim", branch = "0.1.x", dependencies = "nvim-lua/plenary.nvim" },
 	{ "nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
@@ -34,12 +34,25 @@ require("lazy").setup({
 		})
 	end
 	},
-	{ "rstacruz/vim-closer" }
+	{ "rstacruz/vim-closer" },
+	{ "williamboman/mason.nvim" },
+	{ "williamboman/mason-lspconfig.nvim" },
+	{ "neovim/nvim-lspconfig" },
+	--	{ "hrsh7th/cpm-nvim-lsp" },
+	--	{ "hrsh7th/nvim-cmp" },
 })
+
+require("mason").setup()
+require("mason-lspconfig").setup({
+	automatic_installation = true
+})
+require("lspconfig").bashls.setup {}
 
 vim.cmd("set background=dark")
 vim.cmd("colorscheme gruvbox8_hard")
+require("globals")
 require("keymaps")
+require("options")
 
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>pf", builtin.find_files, {})

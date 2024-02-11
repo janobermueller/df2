@@ -91,8 +91,8 @@ bindkey -M vicmd "j" history-beginning-search-forward-end
 
 # Load and configure plugins
 # zsh-abbr
-source "$ZPLUGINS/zsh-abbr/zsh-abbr.plugin.zsh"
-[ ! -s $ABBR_USER_ABBREVIATIONS_FILE ] && source "$XDG_CONFIG_HOME/zsh/abbrrc"
+#source "$ZPLUGINS/zsh-abbr/zsh-abbr.plugin.zsh"
+#[ ! -s $ABBR_USER_ABBREVIATIONS_FILE ] && source "$XDG_CONFIG_HOME/zsh/abbrrc"
 # history-search-multi-word
 source "$ZPLUGINS/history-search-multi-word/history-search-multi-word.plugin.zsh"
 zstyle ":plugin:history-search-multi-word" active "bg=magenta"

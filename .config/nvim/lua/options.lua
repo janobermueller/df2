@@ -1,7 +1,7 @@
 local options = {
 	number = true,
 	relativenumber = true,
-	
+
 	tabstop = 4,
 	softtabstop = 4,
 	shiftwidth = 4,
@@ -15,7 +15,7 @@ local options = {
 	backup = false,
 	swapfile = false,
 	undofile = true,
-	undodir = os.getenv("XDG_STATE_HOME") .. "/nvim/undo",
+	--	undodir = os.getenv("XDG_STATE_HOME") .. "/nvim/undo",
 
 	termguicolors = true,
 
